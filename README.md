@@ -1,10 +1,15 @@
 # Sending Trace Data to Tanzu Observability by Wavefront
 
-This README is for all users who want to send OpenTelemetry trace data or metrics data to Tanzu Observability. This README explains how you can start sending data to Tanzu observability with links to the Documentation. This repository includes specific examples for using the OpenTelemetry collector in java, python, and .NET, etc.
-
-## Overview
-
 If your application uses an OpenTelemetry SDK, you can configure the application to send trace data or metrics data to Tanzu Observability using the Wavefront Proxy or the OpenTelemetry Collector.
+
+## Table of Content
+
+* [Prerequisites](#prerequisites)
+* [Send Trace Data](#send-trace-data)
+* [Send Metrics Data](#send-metrics-data)
+* [Tutorials](#tutorials)
+* [License](#license)
+* [Getting Support](#getting-support)
 
 ## Prerequisites
 
@@ -30,15 +35,29 @@ If your application uses an OpenTelemetry SDK, you can configure the application
   ```
 
 ## Send Trace Data
-If your application uses an OpenTelemetry SDK, you can configure the application to send trace data to Tanzu Observability:
+If your application uses an OpenTelemetry SDK, you can configure the application to send trace data to Tanzu Observability using any of the following options:
 
-* [Directly sending OpenTelemetry data to the Wavefront proxy](https://docs.wavefront.com/opentelemetry_tracing.html#send-data-using-the-wavefront-proxy---recommended) - [Recommended]
-* Or [using the OpenTelemetry Collector](https://docs.wavefront.com/opentelemetry_tracing.html#send-data-using-the-opentelemetry-collector)
+* [Directly send OpenTelemetry data to the Wavefront proxy](https://docs.wavefront.com/opentelemetry_tracing.html#send-data-using-the-wavefront-proxy---recommended) - [Recommended]
+* Or [use the OpenTelemetry Collector and the Wavefront proxy](https://docs.wavefront.com/opentelemetry_tracing.html#send-data-using-the-opentelemetry-collector)
 
 You can then use our tracing dashboards to visualize any request as a trace, which consists of a hierarchy of spans. This visualization helps you pinpoint where the request is spending most of its time and discover problems.
 
-## Send Metrics data
+## Send Metrics Data
 
 If your application uses an OpenTelemetry SDK, you can configure the application to send metrics data to Tanzu Observability using the Tanzu Observability OpenTelemetry Collector. See [ADD LINK WHEN PUBLISHED]() for details.
 
 ## Tutorials
+
+This repository includes specific examples for using the OpenTelemetry collector in Java, Python, .NET, and more. 
+
+For example, navigate to the `java-examples` folder and follow the steps in the README to instrument Java Apps with OpenTelemetry. 
+
+## License
+[Apache 2.0 License - NEEDS TO BE LINKED ONCE ADDED]()
+
+
+
+## Getting Support
+* Reach out to us on our public [Slack channel](https://www.wavefront.com/join-public-slack).
+* If you run into any issues with the examples, let us know by creating a GitHub issue.
+* If you didn't find the information you are looking for in our [Wavefront Documentation](https://docs.wavefront.com/) create a GitHub issue or PR in our [docs repository](https://github.com/wavefrontHQ/docs).
