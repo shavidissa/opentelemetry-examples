@@ -25,16 +25,17 @@ file is already configured with the required dependencies.
   The ```main``` method in this Java application triggers the application to generate and emit a transaction trace, which includes a parent span and a few child spans.
 
 You can examine them data sent by the application to Tanzu Observability on the [Tanzu Observability user interface](https://docs.wavefront.com/tracing_ui_overview.html).
+
 Example: Application Status
-![shows a](resources/java_examples_collector_app_status.png)
+![shows a screenshot of how the application status page looks once the data is on Tanzu Observability by Wavefront](../resources/java_examples_collector_app_status.png)
 
+Example: Traces Browser
+![shows a screenshot of how the traces browser looks once the data is on Tanzu Observability by Wavefront](../resources/java_examples_collector_traces_browser.png)
 
-### Step 2: Instrument the Application
+### OpenTelemetry Building Blocks of the Application
 
-* #### Get an OpenTelemetry Interface
-  The first step is to get a handle to an instance of the OpenTelemetry interface. As an application developer, we need
-  to configure an instance of the OpenTelemetrySdk as early as possible in our application. This can be done using the
-  OpenTelemetrySdk.builder() method.
+* #### OpenTelemetry Interface
+  The first step is to get a handle to an instance of the OpenTelemetry interface. As an application developer, you need to configure an instance of the `OpenTelemetrySdk` as early as possible in your application. This can be done using the `OpenTelemetrySdk.builder()` method.
 
   ```java
       static OpenTelemetry initOpenTelemetry() {
@@ -75,31 +76,28 @@ Example: Application Status
        return spanExporter;
       }
   ```
-  As an aside, if we are writing library instrumentation, it is strongly recommended that we provide our users the
-  ability to inject an instance of ```OpenTelemetry``` into our instrumentation code. If this is not possible for some
-  reason, we can fall back to using an instance from the ```GlobalOpenTelemetry``` class. Note that we can’t force
-  end-users to configure the global, so this is the most brittle option for library instrumentation.
+  If we are writing library instrumentation, it is strongly recommended that you provide the users with the
+  ability to inject an instance of `OpenTelemetry` into the instrumentation code. If this is not possible for some reason, you can fall back to using an instance from the `GlobalOpenTelemetry` class. 
+  
+  **Note**: You can’t force end-users to configure the global OpenTelemetry class.
 
 * #### Get a Tracer
-  First, a Tracer must be acquired, which is responsible for creating spans and interacting with the Context. A tracer
-  is acquired by using the OpenTelemetry API specifying the name and version of the library instrumenting the
-  instrumented library or application to be monitored.
+  The `Tracer` is responsible for creating spans and interacting with the `Context`. A `Tracer` needs to be acquired using the OpenTelemetry API. You need to specify the name and version of the library that is instrumenting your library or application.
   ```java
     private static Tracer getTracer() {
         tracer = openTelemetry.getTracer(<my_instrumentation_library_name>, <my_instrumentation_library_version>);         
         return tracer;
     }
   ```
-  Note: the ```my_instrumentation_library_name``` and ```my_instrumentation_library_version``` of the tracer are purely
-  informational. All Tracers that are created by a single OpenTelemetry instance will interoperate, regardless of name.
+  Note: the ```my_instrumentation_library_name``` and ```my_instrumentation_library_version``` of the `Tracer` are purely informational. All `Tracers` created by a single OpenTelemetry instance will work together, regardless of the name or version.
 
 * #### Create a Nested Span, Add an Attribute
-  To create a basic span, we only need to specify the name of the span. The start and end time of the span is
-  automatically set by the OpenTelemetry SDK. Most of the time, we want to correlate spans for nested operations. In
-  OpenTelemetry spans can be created freely and it’s up to the implementor to annotate them with attributes specific to
-  the represented operation. Attributes provide additional context on a span about the specific operation it tracks,
-  such as results or operation properties. For the ```main``` method to call the ```child``` method, the spans could be
-  manually linked in the following way:
+  To create a basic span, you only need to specify the name of the span. The start and end time of the span is automatically set by the OpenTelemetry SDK. Most of the time, you will need to correlate spans for nested operations. 
+  
+  In OpenTelemetry spans can be created freely and it’s up to the implementor to annotate them with attributes specific to the operation. `Attributes` provide additional context on a span and about the specific operation it tracks, such as results or operation properties. 
+  
+  The spans can be manually linked for the `main` method to call the `child` method in the following way:
+  
     ```java
       public static void main(String[] args) throws InterruptedException {
 
@@ -153,16 +151,5 @@ Example: Application Status
         }
     }
     ```
-* #### More Information
-  The above-mentioned example is a very basic example. Please refer
-  to [the guide](https://opentelemetry.io/docs/instrumentation/java/manual_instrumentation/) for more details
-  like ```events```, ```links```, ```context propagation```, etc.
-
-### Step 3: Run the Application
-
-Run the application either from an IDE or the CLI via `mvn compile exec:java -Dexec.mainClass="com.vmware.App"`.
-
-The ```main``` method in our Java application will trigger our app to generate and emit a trace of a transaction. When
-the trace data collected from the OpenTelemetry collector are ingested, we can examine them in
-the [Tanzu Observability user interface](https://docs.wavefront.com/tracing_ui_overview.html).
-  
+## Next Steps
+The above-mentioned example is a very basic example. Refer [the OpenTelemetry guide](https://opentelemetry.io/docs/instrumentation/java/manual_instrumentation/) for more details, such as `events`, `links`, `context propagation`, and more.
