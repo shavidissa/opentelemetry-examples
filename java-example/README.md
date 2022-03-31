@@ -4,13 +4,19 @@ This guide shows you how to manually instrument your Java application using the 
 
 *Tip : See the blog [Getting started with OpenTelemetry](https://tanzu.vmware.com/content/blog/getting-started-opentelemetry-vmware-tanzu-observability#devops), for steps on auto instrumenting your Java application.*
 
+## Table of Content
 
-### Prerequisite
+* [Prerequisite](#prerequisite)
+* [Send Data to Tanzu Observability](#send-data-to-tanzu-observability)
+* [OpenTelemetry Building Blocks of the Application](#opentelemetry-building-blocks-of-the-application)
+* [Next Steps](#next-steps)
+
+## Prerequisite
 
 * [Install the Wavefront proxy](https://docs.wavefront.com/proxies_installing.html).
 * [Set up an OpenTelemetry Collector for Tanzu Observability](../opentelemetry-examples#opentelemetry-collector). 
 
-# Send Data to Tanzu Observability
+## Send Data to Tanzu Observability
 
 1. Open the `pom.xml` file in the`java-example` directory using your IDE, and right click and select **Add as a Maven Project**.
 
@@ -32,7 +38,7 @@ Example: Application Status
 Example: Traces Browser
 ![shows a screenshot of how the traces browser looks once the data is on Tanzu Observability by Wavefront](../resources/java_examples_collector_traces_browser.png)
 
-### OpenTelemetry Building Blocks of the Application
+## OpenTelemetry Building Blocks of the Application
 
 * #### OpenTelemetry Interface
   The first step is to get a handle to an instance of the OpenTelemetry interface. As an application developer, you need to configure an instance of the `OpenTelemetrySdk` as early as possible in your application. This can be done using the `OpenTelemetrySdk.builder()` method.
