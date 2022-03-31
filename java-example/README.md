@@ -1,6 +1,6 @@
 # Instrumenting Java Apps with OpenTelemetry
 
-This guide shows you how to manually instrument your Java application using the OpenTelemetry API and the OpenTelemetry SDK. The data is sent to Tanzu Observability using the OpenTelemetry Collector and the Wavefront Proxy. To learn more on the data flow, see [Send Trace Data Using the OpenTelemetry Collector](https://docs.wavefront.com/opentelemetry_tracing.html#send-data-using-the-opentelemetry-collector).
+This guide shows you how to manually instrument your Java application using the OpenTelemetry API and the OpenTelemetry SDK. The data is sent to Tanzu Observability using the OpenTelemetry Collector and the Wavefront Proxy. To learn about on the data flow from your application to Tanzu Observability by Wavefront, see [Send Trace Data Using the OpenTelemetry Collector](https://docs.wavefront.com/opentelemetry_tracing.html#send-data-using-the-opentelemetry-collector).
 
 *Tip : See the blog [Getting started with OpenTelemetry](https://tanzu.vmware.com/content/blog/getting-started-opentelemetry-vmware-tanzu-observability#devops), for steps on auto instrumenting your Java application.*
 
@@ -18,7 +18,7 @@ This guide shows you how to manually instrument your Java application using the 
 
 ## Send Data to Tanzu Observability
 
-1. Open the `pom.xml` file in the`java-example` directory using your IDE, and right click and select **Add as a Maven Project**.
+1. Open the `pom.xml` file in the `java-example` directory using your IDE, and right-click and select **Add as a Maven Project**.
 
   The [```pom.xml```](https://github.com/wavefrontHQ/opentelemetry-examples/blob/master/java-example/pom.xml)
 file is already configured with the required dependencies.
@@ -30,7 +30,7 @@ file is already configured with the required dependencies.
 
   The ```main``` method in this Java application triggers the application to generate and emit a transaction trace, which includes a parent span and a few child spans.
 
-You can examine them data sent by the application to Tanzu Observability on the [Tanzu Observability user interface](https://docs.wavefront.com/tracing_ui_overview.html).
+You can examine the data sent by the application to Tanzu Observability on the [Tanzu Observability user interface](https://docs.wavefront.com/tracing_ui_overview.html).
 
 Example: Application Status
 ![shows a screenshot of how the application status page looks once the data is on Tanzu Observability by Wavefront](../resources/java_examples_collector_app_status.png)
@@ -41,7 +41,7 @@ Example: Traces Browser
 ## OpenTelemetry Building Blocks of the Application
 
 * #### OpenTelemetry Interface
-  The first step is to get a handle to an instance of the OpenTelemetry interface. As an application developer, you need to configure an instance of the `OpenTelemetrySdk` as early as possible in your application. This can be done using the `OpenTelemetrySdk.builder()` method.
+  You need to configure an instance of the `OpenTelemetrySdk` as early as possible in your application. This can be done using the `OpenTelemetrySdk.builder()` method.
 
   ```java
       static OpenTelemetry initOpenTelemetry() {
@@ -82,8 +82,8 @@ Example: Traces Browser
        return spanExporter;
       }
   ```
-  If we are writing library instrumentation, it is strongly recommended that you provide the users with the
-  ability to inject an instance of `OpenTelemetry` into the instrumentation code. If this is not possible for some reason, you can fall back to using an instance from the `GlobalOpenTelemetry` class. 
+  If you are writing library instrumentation, it is recommended that you provide the users with the
+  ability to inject an instance of `OpenTelemetry` into the instrumentation code. If this is not possible for some reason, you can fall back on using an instance from the `GlobalOpenTelemetry` class. 
   
   **Note**: You can’t force end-users to configure the global OpenTelemetry class.
 
@@ -95,12 +95,12 @@ Example: Traces Browser
         return tracer;
     }
   ```
-  Note: the ```my_instrumentation_library_name``` and ```my_instrumentation_library_version``` of the `Tracer` are purely informational. All `Tracers` created by a single OpenTelemetry instance will work together, regardless of the name or version.
+  **Note**: the ```my_instrumentation_library_name``` and ```my_instrumentation_library_version``` of the `Tracer` are purely informational. All `Tracers` created by a single OpenTelemetry instance will work together, regardless of the name or version.
 
 * #### Create a Nested Span, Add an Attribute
-  To create a basic span, you only need to specify the name of the span. The start and end time of the span is automatically set by the OpenTelemetry SDK. Most of the time, you will need to correlate spans for nested operations. 
+  To create a basic span, you only need to specify the name of the span. The start and end time of the span is automatically set by the OpenTelemetry SDK. Most of the time, you need to correlate spans for nested operations. 
   
-  In OpenTelemetry spans can be created freely and it’s up to the implementor to annotate them with attributes specific to the operation. `Attributes` provide additional context on a span and about the specific operation it tracks, such as results or operation properties. 
+  In OpenTelemetry spans can be created freely, and it’s up to the implementor to annotate them with attributes specific to the operation. `Attributes` provide additional context on a span and about the specific operation it tracks, such as results or properties of an operations. 
   
   The spans can be manually linked for the `main` method to call the `child` method in the following way:
   
