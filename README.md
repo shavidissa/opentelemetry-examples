@@ -46,6 +46,18 @@ You can then use our tracing dashboards to visualize any request as a trace, whi
 
 If your application uses an OpenTelemetry SDK, you can configure the application to send metrics data to Tanzu Observability using the Tanzu Observability OpenTelemetry Collector. See [ADD LINK WHEN PUBLISHED]() for details.
 
+## OpenTelemetry Collector
+
+Follow these steps to configure the OpenTelemetry Collector:
+
+* Download the `otelcol-contrib` binary from the latest release of
+the [OpenTelemetry Collector project](https://github.com/open-telemetry/opentelemetry-collector-contrib/releases) and add it to a preferred directory.
+
+* Download the [`otel_collector_config.yaml`](resources/otel_collector_config.yml) file to the same directory. 
+
+See [OpenTelemetry collector configurations](https://opentelemetry.io/docs/collector/configuration/) to learn more.
+
+
 ## Tutorials
 
 This repository includes specific examples for using the OpenTelemetry collector in Java, Python, .NET, and more. 

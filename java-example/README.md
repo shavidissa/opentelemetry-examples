@@ -1,86 +1,33 @@
 # Instrumenting Java Apps with OpenTelemetry
 
-## Auto Instrumentation
+This guide shows you how to manually instrument your Java application using the OpenTelemetry API and the OpenTelemetry SDK. The data is sent to Tanzu Observability using the OpenTelemetry Collector and the Wavefront Proxy. To learn more on the data flow, see [Send Trace Data Using the OpenTelemetry Collector](https://docs.wavefront.com/opentelemetry_tracing.html#send-data-using-the-opentelemetry-collector).
 
-This section shows a working example of a Java application auto-instrumented with OpenTelemetry.
+*Tip : See the blog [Getting started with OpenTelemetry](https://tanzu.vmware.com/content/blog/getting-started-opentelemetry-vmware-tanzu-observability#devops), for steps on auto instrumenting your Java application.*
 
-To auto-instrument a Java application, check
-out [this guide](https://tanzu.vmware.com/content/blog/getting-started-opentelemetry-vmware-tanzu-observability#devops).
-
-## Manual Instrumentation
-
-This section shows a working example of a Java application manually-instrumented with OpenTelemetry API and
-configuration through the OpenTelemetry SDK. By default, the OpenTelemetry API returns no-op implementations of the
-classes. Configuring the OpenTelemetry SDK enables the data to be processed and exported in useful ways.
 
 ### Prerequisite
 
-* Install the Tanzu Observability proxy. See
-  this [README](https://github.com/wavefrontHQ/opentelemetry-examples/blob/master/README.md#install-wavefront-proxy).
-* Set up an OpenTelemetry Collector for Tanzu Observability. See
-  this [README](https://github.com/wavefrontHQ/opentelemetry-examples/blob/master/README.md#install-the-opentelemetry-collector)
-  .
+* [Install the Wavefront proxy](https://docs.wavefront.com/proxies_installing.html).
+* [Set up an OpenTelemetry Collector for Tanzu Observability](../opentelemetry-examples#opentelemetry-collector). 
 
-### Step 1: Add a Maven Project
+# Send Data to Tanzu Observability
 
-Locate the ```pom.xml``` in ```java-example``` project in IDE, and right click and select ```Add as a Maven Project```.
-We have put all the dependencies in
-the [```pom.xml```](https://github.com/wavefrontHQ/opentelemetry-examples/blob/master/java-example/pom.xml)
-file.
+1. Open the `pom.xml` file in the`java-example` directory using your IDE, and right click and select **Add as a Maven Project**.
 
-Dependencies included in the ```pom.xml``` are:
+  The [```pom.xml```](https://github.com/wavefrontHQ/opentelemetry-examples/blob/master/java-example/pom.xml)
+file is already configured with the required dependencies.
 
-```xml
+2. Run the application either from the IDE or using the terminal: 
+  ```
+    mvn compile exec:java -Dexec.mainClass="com.vmware.App" 
+  ```
 
-<properties>
-    <version.opentelemetry-alpha>1.9.1</version.opentelemetry-alpha>
-    <version.opentelemetry-semconv>1.9.1-alpha</version.opentelemetry-semconv>
-    <version.opentelemetry>1.9.1</version.opentelemetry>
-    <version.grpc>1.35.0</version.grpc>
-</properties>
+  The ```main``` method in this Java application triggers the application to generate and emit a transaction trace, which includes a parent span and a few child spans.
 
-<dependencyManagement>
-<dependencies>
-    <dependency>
-        <groupId>io.opentelemetry</groupId>
-        <artifactId>opentelemetry-bom</artifactId>
-        <version>${version.opentelemetry}</version>
-        <type>pom</type>
-        <scope>import</scope>
-    </dependency>
-</dependencies>
-</dependencyManagement>
+You can examine them data sent by the application to Tanzu Observability on the [Tanzu Observability user interface](https://docs.wavefront.com/tracing_ui_overview.html).
+Example: Application Status
+![shows a](resources/java_examples_collector_app_status.png)
 
-<dependencies>
-<dependency>
-    <groupId>io.opentelemetry</groupId>
-    <artifactId>opentelemetry-api</artifactId>
-</dependency>
-<dependency>
-    <groupId>io.opentelemetry</groupId>
-    <artifactId>opentelemetry-sdk</artifactId>
-</dependency>
-<dependency>
-    <groupId>io.opentelemetry</groupId>
-    <artifactId>opentelemetry-exporter-otlp</artifactId>
-</dependency>
-<dependency>
-    <groupId>io.grpc</groupId>
-    <artifactId>grpc-protobuf</artifactId>
-    <version>${version.grpc}</version>
-</dependency>
-<dependency>
-    <groupId>io.grpc</groupId>
-    <artifactId>grpc-netty-shaded</artifactId>
-    <version>${version.grpc}</version>
-</dependency>
-<dependency>
-    <groupId>io.opentelemetry</groupId>
-    <artifactId>opentelemetry-semconv</artifactId>
-    <version>${version.opentelemetry-semconv}</version>
-</dependency>
-</dependencies>
-```
 
 ### Step 2: Instrument the Application
 
