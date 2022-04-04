@@ -1,6 +1,6 @@
-# Sending Trace Data to Tanzu Observability by Wavefront
+# Sending Data to Tanzu Observability by Wavefront
 
-If your application uses an OpenTelemetry SDK, you can configure the application to send trace data or metrics data to Tanzu Observability using the Wavefront Proxy or the OpenTelemetry Collector.
+If your application uses an OpenTelemetry SDK, you can configure the application to send traces or metrics to Tanzu Observability using the Wavefront Proxy or the OpenTelemetry Collector.
 
 ## Table of Content
 
@@ -37,14 +37,18 @@ If your application uses an OpenTelemetry SDK, you can configure the application
 ## Send Trace Data
 If your application uses an OpenTelemetry SDK, you can configure the application to send trace data to Tanzu Observability using any of the following options:
 
-* [Directly send OpenTelemetry data to the Wavefront proxy](https://docs.wavefront.com/opentelemetry_tracing.html#send-data-using-the-wavefront-proxy---recommended) - [Recommended]
-* Or [use the OpenTelemetry Collector and the Wavefront proxy](https://docs.wavefront.com/opentelemetry_tracing.html#send-data-using-the-opentelemetry-collector)
+* [**Directly send OpenTelemetry data to the Wavefront proxy**](https://docs.wavefront.com/opentelemetry_tracing.html#send-data-using-the-wavefront-proxy---recommended) - [Recommended]
+  <img src="resources/opentelemetry_proxy_tracing.png" alt="A data flow diagram that shows how the data flows from your application to the proxy, and then to Tanzu Observability" style="width:850px;"/>
+* Or [**use the OpenTelemetry Collector and the Wavefront proxy**](https://docs.wavefront.com/opentelemetry_tracing.html#send-data-using-the-opentelemetry-collector)
+  ![A data flow diagram that shows how the data flows from your application to the collector, to the proxy, and then to Tanzu Observability](resources/opentelemetry_collector_tracing.png)
 
 You can then use our tracing dashboards to visualize any request as a trace, which consists of a hierarchy of spans. This visualization helps you pinpoint where the request is spending most of its time and discover problems.
 
 ## Send Metrics Data
 
 If your application uses an OpenTelemetry SDK, you can configure the application to send metrics data to Tanzu Observability using the Tanzu Observability OpenTelemetry Collector. See [ADD LINK WHEN PUBLISHED]() for details.
+
+![A data flow diagram that shows how the data flows from your application to the collector, to the proxy, and then to Tanzu Observability.](resources/opentelemetry_collector_metrics.png)
 
 ## OpenTelemetry Collector
 
